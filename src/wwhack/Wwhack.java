@@ -20,7 +20,7 @@ public class Wwhack {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        XMLHarvester harvester = new XMLHarvester();
-        String playString = harvester.parseXML("http://wwsrv.edina.ac.uk/wworld/static/plays/Alls_Well_That_Ends_Well.xml");
+        XMLHarvester harvester = new XMLHarvester("http://wwsrv.edina.ac.uk/wworld/static/plays/Alls_Well_That_Ends_Well.xml");
+        System.out.println(harvester.getResult());  
     }
 }

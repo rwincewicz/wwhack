@@ -18,7 +18,16 @@ import org.w3c.dom.NodeList;
  */
 public class XMLHarvester {
     
-    public String parseXML(String path) {
+    private String path;
+    private String play;
+    private String newPlay;
+    
+    public XMLHarvester(String path) {
+        this.path = path;
+        newPlay = parseXML();
+    }
+    
+    private String parseXML() {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         StringBuilder sb = new StringBuilder();
         try {
@@ -26,14 +35,27 @@ public class XMLHarvester {
             Document dom = db.parse(path);
             Element rootElement = dom.getDocumentElement();
             NodeList nl = rootElement.getElementsByTagName("PlainText");
-            System.out.println("Length: " + nl.getLength());
             for (int i = 0; i < nl.getLength(); i++) {
                 Element lineElement = (Element) nl.item(i);
-                sb.append(lineElement.getTextContent());
+                sb.append(searchWords(lineElement.getTextContent()));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return sb.toString();
+    }
+    
+    private String searchWords(String line) {
+        StringBuilder newLine = new StringBuilder();
+        String[] lineArray = line.split(" ");
+        for (String word : lineArray) {
+            newLine.append(word);
+            newLine.append("-");
+        }
+        return newLine.toString();
+    }
+    
+    public String getResult() {
+        return newPlay;
     }
 }
